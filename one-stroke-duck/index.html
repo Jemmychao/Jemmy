@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>一笔画小鸭</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap">
+<style>
+:root {
+  color-scheme: light;
+  --pond: #D9E9F2;
+  --pond-deep: #A9CBDF;
+  --paper: #FFFDF6;
+  --paper-edge: #E3DAC4;
+  --text: #1F2A33;
+  --muted: #5B6B77;
+  --ink: #1F2A33;
+  --guide: #E28C7C;
+  --guide-strong: #CF6650;
+  --duck: #F9C93A;
+  --duck-shade: #E2A52A;
+  --beak: #F0862B;
+  --eye: #1F2A33;
+  --glint: #FFFFFF;
+  --bad: #D04C3D;
+  --good: #3C8F5C;
+  --pill-bg: #FFFFFF;
+  --pill-border: #B7CEDB;
+  --pill-hover: #F2F8FB;
+  --pill-active: #1F2A33;
+  --pill-active-text: #FFFDF6;
+  --btn-bg: #FFFFFF;
+  --btn-border: #B7CEDB;
+  --btn-primary: #F9C93A;
+  --btn-primary-text: #1F2A33;
+  --hint-bg: rgba(31, 42, 51, .78);
+  --hint-text: #FFFDF6;
+  --shadow: 0 12px 32px rgba(31, 42, 51, .14);
+  --focus: #2F7FB8;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --pond: #0D1A24;
+    --pond-deep: #24455A;
+    --paper: #15242F;
+    --paper-edge: #2B4153;
+    --text: #E6EEF3;
+    --muted: #93A8B6;
+    --ink: #F1F5F8;
+    --guide: #E48E7E;
+    --guide-strong: #F2A493;
+    --duck: #F9C93A;
+    --duck-shade: #DBA226;
+    --beak: #F0862B;
+    --eye: #1F2A33;
+    --glint: #FFFFFF;
+    --bad: #FF7A6A;
+    --good: #6CC08B;
+    --pill-bg: #15242F;
+    --pill-border: #35516A;
+    --pill-hover: #1B2E3B;
+    --pill-active: #F1F5F8;
+    --pill-active-text: #0D1A24;
+    --btn-bg: #15242F;
+    --btn-border: #35516A;
+    --btn-primary: #F9C93A;
+    --btn-primary-text: #1F2A33;
+    --hint-bg: rgba(241, 245, 248, .9);
+    --hint-text: #0D1A24;
+    --shadow: 0 12px 32px rgba(0, 0, 0, .45);
+    --focus: #7FB9E0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --pond: #0D1A24;
+  --pond-deep: #24455A;
+  --paper: #15242F;
+  --paper-edge: #2B4153;
+  --text: #E6EEF3;
+  --muted: #93A8B6;
+  --ink: #F1F5F8;
+  --guide: #E48E7E;
+  --guide-strong: #F2A493;
+  --duck: #F9C93A;
+  --duck-shade: #DBA226;
+  --beak: #F0862B;
+  --eye: #1F2A33;
+  --glint: #FFFFFF;
+  --bad: #FF7A6A;
+  --good: #6CC08B;
+  --pill-bg: #15242F;
+  --pill-border: #35516A;
+  --pill-hover: #1B2E3B;
+  --pill-active: #F1F5F8;
+  --pill-active-text: #0D1A24;
+  --btn-bg: #15242F;
+  --btn-border: #35516A;
+  --btn-primary: #F9C93A;
+  --btn-primary-text: #1F2A33;
+  --hint-bg: rgba(241, 245, 248, .9);
+  --hint-text: #0D1A24;
+  --shadow: 0 12px 32px rgba(0, 0, 0, .45);
+  --focus: #7FB9E0;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  background: var(--pond);
+  color: var(--text);
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  padding-inline: 16px;
+  padding-block: 22px 44px;
+  -webkit-font-smoothing: antialiased;
+}
+.display {
+  font-family: "ZCOOL KuaiLe", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+  font-weight: 400;
+}
+.app { max-width: 720px; margin: 0 auto; display: grid; gap: 18px; }
+
+.masthead { display: grid; gap: 6px; }
+h1 {
+  margin: 0;
+  font-size: clamp(34px, 7vw, 46px);
+  line-height: 1.1;
+  letter-spacing: .02em;
+  text-wrap: balance;
+}
+h1 em { font-style: normal; color: var(--guide-strong); }
+.lede { margin: 0; color: var(--muted); max-width: 40em; }
+
+.modes { display: flex; flex-wrap: wrap; gap: 10px; }
+.pill {
+  appearance: none;
+  border: 1px solid var(--pill-border);
+  background: var(--pill-bg);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 8px 18px 9px;
+  display: grid;
+  gap: 1px;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1.25;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.pill:hover { background: var(--pill-hover); }
+.pill:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.pill .name { font-size: 18px; letter-spacing: .04em; }
+.pill .sub { font-size: 12px; color: var(--muted); }
+.pill.is-active { background: var(--pill-active); color: var(--pill-active-text); border-color: var(--pill-active); }
+.pill.is-active .sub { color: inherit; opacity: .78; }
+
+.board {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--paper-edge);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+canvas {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 4 / 3;
+  touch-action: none;
+  cursor: crosshair;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.board-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  max-width: calc(100% - 32px);
+  background: var(--hint-bg);
+  color: var(--hint-text);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  transition: opacity .2s;
+}
+.board-hint.is-quiet { opacity: 0; }
+
+.result {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 24px;
+  align-items: center;
+  background: var(--paper);
+  border: 1px solid var(--paper-edge);
+  border-radius: 16px;
+  padding: 18px 22px 20px;
+}
+.score-wrap { display: flex; align-items: baseline; gap: 4px; }
+.score {
+  font-size: 68px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  min-width: 2ch;
+  text-align: right;
+}
+.score-unit { font-size: 20px; color: var(--muted); }
+.result-body { display: grid; gap: 10px; }
+.verdict { font-size: 22px; line-height: 1.3; text-wrap: balance; }
+.verdict .record { display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 999px; background: var(--guide-strong); color: #FFFDF6; font-size: 13px; vertical-align: middle; }
+.tip { margin: 0; color: var(--muted); font-size: 14px; }
+.stats { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 0; }
+.stats div { display: flex; align-items: baseline; gap: 6px; }
+.stats dt { color: var(--muted); font-size: 13px; }
+.stats dd { margin: 0; font-variant-numeric: tabular-nums; font-size: 17px; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.btn {
+  appearance: none;
+  font: inherit;
+  font-size: 15px;
+  border-radius: 999px;
+  padding: 9px 20px;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--text);
+  cursor: pointer;
+}
+.btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.btn.primary { background: var(--btn-primary); color: var(--btn-primary-text); border-color: var(--btn-primary); font-size: 17px; letter-spacing: .04em; }
+.btn.primary:hover { filter: brightness(1.04); }
+
+.foot { display: grid; gap: 6px; color: var(--muted); font-size: 13px; }
+.foot-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; align-items: center; }
+.best { font-variant-numeric: tabular-nums; }
+.linkish {
+  appearance: none;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 2px 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--pill-border);
+}
+.linkish:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+.rules { margin: 0; }
+
+@media (max-width: 560px) {
+  .result { grid-template-columns: 1fr; gap: 10px; }
+  .score { text-align: left; }
+  .stats { gap: 4px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pill, .board-hint { transition: none; }
+}
+</style>
+</head>
+<body>
+<main class="app">
+  <header class="masthead">
+    <h1 class="display">一笔画<em>小鸭</em></h1>
+    <p class="lede">按住鼠标，沿着朱红虚线一口气描完这只鸭子。中途松手就算收笔，画得越贴线分越高，够像的话鸭子会活过来。</p>
+  </header>
+
+  <div class="modes" role="radiogroup" aria-label="玩法">
+    <button class="pill is-active" type="button" role="radio" aria-checked="true" data-mode="trace" id="mode-trace">
+      <span class="name display">描红</span><span class="sub">虚线全程可见</span>
+    </button>
+    <button class="pill" type="button" role="radio" aria-checked="false" data-mode="memory" id="mode-memory">
+      <span class="name display">记忆</span><span class="sub">一落笔虚线就消失</span>
+    </button>
+    <button class="pill" type="button" role="radio" aria-checked="false" data-mode="blind" id="mode-blind">
+      <span class="name display">盲画</span><span class="sub">虚线和笔迹都看不见</span>
+    </button>
+  </div>
+
+  <section class="board" aria-label="画板">
+    <canvas id="board" aria-label="画鸭子的画板，按住鼠标沿虚线描一圈"></canvas>
+    <div class="board-hint" id="hint">从虚线上任意一点落笔，绕一圈回到起点</div>
+  </section>
+
+  <section class="result" id="result" hidden aria-live="polite">
+    <div class="score-wrap">
+      <div class="score display" id="score">0</div>
+      <div class="score-unit">分</div>
+    </div>
+    <div class="result-body">
+      <div class="verdict display" id="verdict"></div>
+      <p class="tip" id="tip" hidden></p>
+      <dl class="stats">
+        <div><dt>描到</dt><dd id="stat-cover">0%</dd></div>
+        <div><dt>贴线</dt><dd id="stat-prec">0%</dd></div>
+        <div><dt>用时</dt><dd id="stat-time">0.0 秒</dd></div>
+      </dl>
+      <div class="actions">
+        <button class="btn primary display" type="button" id="retry">再画一只</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-row">
+      <div class="best" id="best">描红 · 还没有成绩</div>
+      <button class="linkish" type="button" id="sound" aria-pressed="true">鸭叫：开</button>
+    </div>
+    <p class="rules">规则很简单：一笔画完不许松手，起点和方向随意。评分看两件事，鸭子描到了多少，以及你的笔迹有多少贴在线上。偏得远的笔迹会标红。</p>
+  </footer>
+</main>
+
+<script>
+(() => {
+  'use strict';
+
+  // ---------- 常量 ----------
+  const W = 600, H = 450;            // 设计坐标系，画布按比例缩放
+  const TOL = 12, TOL_FAR = 26;      // 离线 12 以内算贴线，26 以外不计分，中间线性过渡
+  const ALIVE_AT = 70, PARTY_AT = 90;
+  const MODE_NAME = { trace: '描红', memory: '记忆', blind: '盲画' };
+
+  // ---------- DOM ----------
+  const canvas = document.getElementById('board');
+  const ctx = canvas.getContext('2d');
+  const hintEl = document.getElementById('hint');
+  const resultEl = document.getElementById('result');
+  const scoreEl = document.getElementById('score');
+  const verdictEl = document.getElementById('verdict');
+  const tipEl = document.getElementById('tip');
+  const statCover = document.getElementById('stat-cover');
+  const statPrec = document.getElementById('stat-prec');
+  const statTime = document.getElementById('stat-time');
+  const bestEl = document.getElementById('best');
+  const retryBtn = document.getElementById('retry');
+  const soundBtn = document.getElementById('sound');
+  const modeBtns = Array.from(document.querySelectorAll('.pill'));
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+  // ---------- 几何工具 ----------
+  const hyp = (a, b) => Math.hypot(b[0] - a[0], b[1] - a[1]);
+  const clamp = (v, lo, hi) => v < lo ? lo : v > hi ? hi : v;
+
+  // 向心 Catmull-Rom 样条。open：端点处用外推的虚拟点，让曲线在端点形成尖角。
+  function spline(pts, closed, per = 18) {
+    const n = pts.length, out = [];
+    const at = i => {
+      if (closed) return pts[((i % n) + n) % n];
+      if (i < 0) return [2 * pts[0][0] - pts[1][0], 2 * pts[0][1] - pts[1][1]];
+      if (i >= n) return [2 * pts[n - 1][0] - pts[n - 2][0], 2 * pts[n - 1][1] - pts[n - 2][1]];
+      return pts[i];
+    };
+    const segs = closed ? n : n - 1;
+    for (let i = 0; i < segs; i++) {
+      const p0 = at(i - 1), p1 = at(i), p2 = at(i + 1), p3 = at(i + 2);
+      const d = (a, b) => Math.max(1e-4, Math.sqrt(hyp(a, b)));
+      const t0 = 0, t1 = t0 + d(p0, p1), t2 = t1 + d(p1, p2), t3 = t2 + d(p2, p3);
+      const lerp = (a, b, ta, tb, t) => {
+        const k = (t - ta) / (tb - ta);
+        return [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k];
+      };
+      for (let s = 0; s < per; s++) {
+        const t = t1 + (t2 - t1) * s / per;
+        const a1 = lerp(p0, p1, t0, t1, t), a2 = lerp(p1, p2, t1, t2, t), a3 = lerp(p2, p3, t2, t3, t);
+        const b1 = lerp(a1, a2, t0, t2, t), b2 = lerp(a2, a3, t1, t3, t);
+        out.push(lerp(b1, b2, t1, t2, t));
+      }
+    }
+    if (!closed) out.push(pts[n - 1].slice());
+    return out;
+  }
+
+  // 按弧长等距重采样
+  function resample(pts, spacing, closed) {
+    const src = closed ? pts.concat([pts[0]]) : pts;
+    const out = [src[0].slice()];
+    let carry = 0;
+    for (let i = 1; i < src.length; i++) {
+      const a = src[i - 1], b = src[i], len = hyp(a, b);
+      if (len === 0) continue;
+      let pos = spacing - carry;
+      while (pos <= len) {
+        const t = pos / len;
+        out.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]);
+        pos += spacing;
+      }
+      carry = len - (pos - spacing);
+    }
+    return out;
+  }
+
+  function polyLength(pts, closed) {
+    let L = 0;
+    for (let i = 1; i < pts.length; i++) L += hyp(pts[i - 1], pts[i]);
+    if (closed && pts.length > 1) L += hyp(pts[pts.length - 1], pts[0]);
+    return L;
+  }
+
+  // 点到折线的最短距离
+  function distToPath(p, pts, closed) {
+    const n = pts.length, m = closed ? n : n - 1;
+    let best = Infinity;
+    for (let i = 0; i < m; i++) {
+      const a = pts[i], b = pts[(i + 1) % n];
+      const dx = b[0] - a[0], dy = b[1] - a[1], len2 = dx * dx + dy * dy;
+      let t = len2 ? ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / len2 : 0;
+      t = t < 0 ? 0 : t > 1 ? 1 : t;
+      const ex = a[0] + dx * t - p[0], ey = a[1] + dy * t - p[1];
+      const d2 = ex * ex + ey * ey;
+      if (d2 < best) best = d2;
+    }
+    return Math.sqrt(best);
+  }
+
+  // ---------- 鸭子的形状 ----------
+  const HEAD = { x: 395, y: 128, r: 64 };
+  const onHead = deg => {
+    const a = deg * Math.PI / 180;
+    return [HEAD.x + HEAD.r * Math.cos(a), HEAD.y - HEAD.r * Math.sin(a)];
+  };
+  // 三段开放样条首尾相接，接点处形成尖角：尾尖、上嘴根、下嘴根
+  const BACK = [[62, 158], [96, 190], [160, 212], [232, 219], [300, 210], [328, 189], [335, 158],
+    onHead(170), onHead(140), onHead(110), onHead(80), onHead(50), onHead(25), [459, 118]];
+  const BEAK_ANCHORS = [[459, 118], [490, 119], [518, 128], [531, 142], [521, 156], [495, 162], [462, 160]];
+  const BELLY = [[462, 160], [446, 170], [430, 184], [437, 214], [441, 250], [430, 292], [392, 326],
+    [318, 352], [234, 353], [160, 338], [112, 314], [84, 276], [70, 230], [62, 158]];
+  const WING_ANCHORS = [[318, 262], [268, 244], [208, 250], [186, 282], [222, 308], [292, 302]];
+  const EYE = [416, 111];
+
+  const outline = spline(BACK, false).concat(spline(BEAK_ANCHORS, false), spline(BELLY, false));
+  const GUIDE = resample(outline, 3, true);          // 评分与绘制都用它
+  const GUIDE_LEN = polyLength(GUIDE, true);
+  const BEAK = spline(BEAK_ANCHORS, false);           // 闭合后填橙色
+  const WING = spline(WING_ANCHORS, true);
+
+  // ---------- 状态 ----------
+  let mode = 'trace';
+  let state = 'idle';                 // idle | drawing | result
+  let stroke = [];                    // 玩家笔迹，设计坐标
+  let offTrack = null;                // 每个笔迹点是否偏离
+  let activePointer = null;
+  let t0 = 0;
+  let guideAlpha = 1, guideTarget = 1;
+  let strokeVisible = true;
+  let alive = false, aliveAt = 0, partyAt = 0;
+  let confetti = [], lastFrame = 0;
+  let soundOn = true;
+  let dpr = 1, scale = 1;
+  let rafId = 0;
+
+  // ---------- 画布尺寸 ----------
+  function fit() {
+    const r = canvas.getBoundingClientRect();
+    if (!r.width) return;
+    dpr = window.devicePixelRatio || 1;
+    scale = r.width / W;
+    canvas.width = Math.round(r.width * dpr);
+    canvas.height = Math.round(r.height * dpr);
+    schedule();
+  }
+  new ResizeObserver(fit).observe(canvas);
+
+  function toDesign(e) {
+    const r = canvas.getBoundingClientRect();
+    const k = r.width / W;
+    return [(e.clientX - r.left) / k, (e.clientY - r.top) / k];
+  }
+
+  // ---------- 主题色（从 CSS 变量读取，切换主题时失效重取） ----------
+  let tokenCache = null;
+  function tokens() {
+    if (tokenCache) return tokenCache;
+    const cs = getComputedStyle(document.documentElement);
+    const g = n => cs.getPropertyValue(n).trim();
+    tokenCache = {
+      paper: g('--paper'), pondDeep: g('--pond-deep'), ink: g('--ink'), guide: g('--guide'),
+      duck: g('--duck'), duckShade: g('--duck-shade'), beak: g('--beak'), eye: g('--eye'),
+      glint: g('--glint'), bad: g('--bad')
+    };
+    return tokenCache;
+  }
+  const invalidateTokens = () => { tokenCache = null; schedule(); };
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', invalidateTokens);
+  new MutationObserver(invalidateTokens).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  // ---------- 绘制 ----------
+  function tracePath(pts, closed) {
+    ctx.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+    if (closed) ctx.closePath();
+  }
+
+  function drawWater(c, now) {
+    const t = alive && !reduceMotion.matches ? (now - aliveAt) / 1000 : 0;
+    ctx.save();
+    ctx.strokeStyle = c.pondDeep;
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    const rows = [[392, 46, 554, 0], [414, 110, 490, 1.9]];
+    for (const [y, x0, x1, ph] of rows) {
+      ctx.beginPath();
+      for (let x = x0; x <= x1; x += 4) {
+        const yy = y + Math.sin(x / 21 + t * 2.4 + ph) * 3;
+        if (x === x0) ctx.moveTo(x, yy); else ctx.lineTo(x, yy);
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawGuide(c, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.strokeStyle = c.guide;
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.setLineDash([6, 8]);
+    ctx.beginPath();
+    tracePath(GUIDE, true);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawStroke(c) {
+    if (!stroke.length) return;
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = c.ink;
+    ctx.fillStyle = c.ink;
+    if (stroke.length === 1) {
+      ctx.beginPath();
+      ctx.arc(stroke[0][0], stroke[0][1], 2.5, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      ctx.beginPath();
+      tracePath(stroke, false);
+      ctx.stroke();
+    }
+    if (offTrack) {
+      ctx.strokeStyle = c.bad;
+      ctx.beginPath();
+      let open = false;
+      for (let i = 0; i < stroke.length - 1; i++) {
+        if (offTrack[i] && offTrack[i + 1]) {
+          if (!open) { ctx.moveTo(stroke[i][0], stroke[i][1]); open = true; }
+          ctx.lineTo(stroke[i + 1][0], stroke[i + 1][1]);
+        } else open = false;
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawAliveDuck(c, now) {
+    const k = reduceMotion.matches ? 1 : clamp((now - aliveAt) / 400, 0, 1);
+    ctx.save();
+    ctx.globalAlpha = k;
+    ctx.fillStyle = c.duck;
+    ctx.beginPath(); tracePath(GUIDE, true); ctx.fill();
+    ctx.globalAlpha = k * .6;
+    ctx.fillStyle = c.duckShade;
+    ctx.beginPath(); tracePath(WING, true); ctx.fill();
+    ctx.globalAlpha = k;
+    ctx.fillStyle = c.beak;
+    ctx.beginPath(); tracePath(BEAK, true); ctx.fill();
+    ctx.restore();
+  }
+
+  function drawEye(c, now) {
+    let s = 1;
+    if (!reduceMotion.matches) {
+      const t = (now - aliveAt - 450) / 320;
+      if (t < 0) return;
+      if (t < 1) { const u = t - 1; s = 1 + u * u * (2.7 * u + 1.7); } // 回弹
+    }
+    ctx.save();
+    ctx.translate(EYE[0], EYE[1]);
+    ctx.scale(s, s);
+    ctx.fillStyle = c.eye;
+    ctx.beginPath(); ctx.arc(0, 0, 7, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = c.glint;
+    ctx.beginPath(); ctx.arc(2.6, -2.6, 2.2, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+
+  function startParty() {
+    for (let i = 0; i < 90; i++) {
+      confetti.push({
+        x: Math.random() * W, y: -10 - Math.random() * 90,
+        vx: (Math.random() - .5) * 70, vy: 70 + Math.random() * 90,
+        r: Math.random() * Math.PI, vr: (Math.random() - .5) * 7,
+        w: 6 + Math.random() * 6, h: 4 + Math.random() * 4, col: i % 4
+      });
+    }
+  }
+  function stepConfetti(now) {
+    if (!confetti.length) { lastFrame = now; return; }
+    const dt = Math.min(.05, (now - (lastFrame || now)) / 1000);
+    lastFrame = now;
+    for (const p of confetti) {
+      p.vy += 150 * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.r += p.vr * dt;
+    }
+    confetti = confetti.filter(p => p.y < H + 20);
+  }
+  function drawConfetti(c) {
+    if (!confetti.length) return;
+    const cols = [c.duck, c.beak, c.guide, c.pondDeep];
+    for (const p of confetti) {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.r);
+      ctx.fillStyle = cols[p.col];
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    }
+  }
+
+  function render(now) {
+    const c = tokens();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.setTransform(scale * dpr, 0, 0, scale * dpr, 0, 0);
+    ctx.fillStyle = c.paper;
+    ctx.fillRect(0, 0, W, H);
+    drawWater(c, now);
+
+    ctx.save();
+    if (alive && !reduceMotion.matches) {
+      const t = (now - aliveAt) / 1000;
+      ctx.translate(0, Math.sin(t * 2.4) * 3);
+      ctx.translate(296, 250);
+      ctx.rotate(Math.sin(t * 2.4 + .7) * .014);
+      ctx.translate(-296, -250);
+    }
+    if (alive) drawAliveDuck(c, now);
+    if (guideAlpha > .005) drawGuide(c, guideAlpha);
+    if (strokeVisible) drawStroke(c);
+    if (alive) drawEye(c, now);
+    ctx.restore();
+
+    drawConfetti(c);
+  }
+
+  function frame(now) {
+    rafId = 0;
+    if (Math.abs(guideAlpha - guideTarget) > .01) {
+      guideAlpha += (guideTarget - guideAlpha) * (reduceMotion.matches ? 1 : .2);
+    } else guideAlpha = guideTarget;
+    if (partyAt && now >= partyAt) { partyAt = 0; startParty(); }
+    stepConfetti(now);
+    render(now);
+    const animating = confetti.length > 0 || partyAt > 0 || Math.abs(guideAlpha - guideTarget) > .01 ||
+      (alive && (!reduceMotion.matches || now - aliveAt < 1200));
+    if (animating) schedule();
+  }
+  function schedule() { if (!rafId) rafId = requestAnimationFrame(frame); }
+
+  // ---------- 评分 ----------
+  // 容差按屏幕像素兜底：画布缩得再小，贴线判定也不少于 12 像素，手机上用手指才公平
+  function evaluate(pts) {
+    const len = polyLength(pts, false);
+    if (pts.length < 2 || len < GUIDE_LEN * .12) return { tooShort: true };
+    const tol = Math.max(TOL, 12 / scale);
+    const far = tol * (TOL_FAR / TOL);
+    const credit = d => d <= tol ? 1 : d >= far ? 0 : 1 - (d - tol) / (far - tol);
+    let cover = 0;
+    for (const g of GUIDE) cover += credit(distToPath(g, pts, false));
+    cover /= GUIDE.length;
+    const even = resample(pts, 3, false);
+    let prec = 0;
+    for (const p of even) prec += credit(distToPath(p, GUIDE, true));
+    prec /= even.length;
+    const off = pts.map(p => credit(distToPath(p, GUIDE, true)) < .5);
+    // 笔迹比鸭子周长长太多，说明来回抖或绕了不止一圈，打折
+    const ratio = len / GUIDE_LEN;
+    const economy = ratio <= 1.2 ? 1 : Math.max(.5, 1 - (ratio - 1.2) * .6);
+    const score = Math.round(100 * Math.pow(cover, 1.25) * (.35 + .65 * prec) * economy);
+    return { score: clamp(score, 0, 100), cover, prec, off, ratio };
+  }
+
+  function verdictFor(s) {
+    if (s >= 100) return '满分！这只鸭子是打印出来的吧？';
+    if (s >= 95) return '神笔！鸭鸭活了，还冲你嘎了一声';
+    if (s >= 85) return '画得真像，鸭鸭很满意';
+    if (s >= ALIVE_AT) return '有点像鸭子了，给你点个睛';
+    if (s >= 50) return '嗯……像一只被踩扁的鸭子';
+    if (s >= 30) return '这是鸭子还是土豆？';
+    return '鸭鸭表示不认识你画的是啥';
+  }
+  function tipFor(r) {
+    if (r.score >= ALIVE_AT) return mode === 'trace' && r.score >= 85 ? '描红练熟了，去试试记忆或盲画。' : '';
+    if (r.cover < .6 && r.prec >= .7) return '笔迹挺贴线，但鸭子没画全。记得绕一整圈回到起点。';
+    if (r.ratio > 1.4) return '笔迹比鸭子的周长长出不少，别来回抖，一圈画到位就收笔。';
+    if (r.cover >= .8 && r.prec < .6) return '整只都描到了，就是手飘了。慢一点更稳。';
+    if (mode !== 'trace') return '先在描红模式练几笔手感，再来挑战。';
+    return '手稳一点，速度慢一点，贴着虚线走。';
+  }
+
+  // ---------- 最高分 ----------
+  const bestKey = m => 'one-stroke-duck.best.' + m;
+  function loadBest(m) {
+    try { const v = parseInt(localStorage.getItem(bestKey(m)), 10); return Number.isFinite(v) ? v : null; } catch (_) { return null; }
+  }
+  function saveBest(m, s) { try { localStorage.setItem(bestKey(m), String(s)); } catch (_) {} }
+  function showBest() {
+    const b = loadBest(mode);
+    bestEl.textContent = MODE_NAME[mode] + (b === null ? ' · 还没有成绩' : ' · 最高 ' + b + ' 分');
+  }
+
+  // ---------- 声音：合成一声鸭叫 ----------
+  let audio = null;
+  function ensureAudio() {
+    try {
+      if (!audio) audio = new (window.AudioContext || window.webkitAudioContext)();
+      if (audio.state === 'suspended') audio.resume();
+    } catch (_) { audio = null; }
+  }
+  function quack(times) {
+    if (!audio) return;
+    try {
+      const t0 = audio.currentTime;
+      for (let i = 0; i < times; i++) {
+        const t = t0 + i * .26;
+        const osc = audio.createOscillator();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(470, t);
+        osc.frequency.exponentialRampToValueAtTime(330, t + .16);
+        const filt = audio.createBiquadFilter();
+        filt.type = 'bandpass';
+        filt.frequency.setValueAtTime(1100, t);
+        filt.frequency.exponentialRampToValueAtTime(700, t + .16);
+        filt.Q.value = 2.2;
+        const gain = audio.createGain();
+        gain.gain.setValueAtTime(.0001, t);
+        gain.gain.exponentialRampToValueAtTime(.55, t + .02);
+        gain.gain.exponentialRampToValueAtTime(.0001, t + .2);
+        osc.connect(filt).connect(gain).connect(audio.destination);
+        osc.start(t);
+        osc.stop(t + .22);
+      }
+    } catch (_) {}
+  }
+
+  // ---------- 提示语 ----------
+  const HINT_IDLE = {
+    trace: '从虚线上任意一点落笔，绕一圈回到起点',
+    memory: '先看清位置再落笔，虚线一碰就没',
+    blind: '落笔后什么都看不见，松手才揭晓'
+  };
+  const HINT_DRAWING = { trace: '别松手……', memory: '凭记忆走完这一圈……', blind: '全靠手感……' };
+  function setHint(text) {
+    hintEl.textContent = text || '';
+    hintEl.classList.toggle('is-quiet', !text);
+  }
+
+  // ---------- 回合 ----------
+  function resetRound() {
+    state = 'idle';
+    stroke = [];
+    offTrack = null;
+    alive = false;
+    partyAt = 0;
+    confetti = [];
+    guideTarget = 1;
+    strokeVisible = true;
+    resultEl.hidden = true;
+    setHint(HINT_IDLE[mode]);
+    schedule();
+  }
+
+  function finish(now) {
+    const secs = (now - t0) / 1000;
+    const r = evaluate(stroke);
+    strokeVisible = true;
+    guideTarget = 1;
+    if (r.tooShort) {
+      state = 'idle';
+      stroke = [];
+      setHint('这一笔太短，鸭子还没成形。再来一笔！');
+      schedule();
+      return;
+    }
+    state = 'result';
+    offTrack = r.off;
+    const prev = loadBest(mode);
+    const isRecord = prev === null || r.score > prev;
+    if (isRecord) saveBest(mode, r.score);
+    showBest();
+
+    scoreEl.textContent = r.score;
+    verdictEl.textContent = verdictFor(r.score);
+    if (isRecord && prev !== null) {
+      const badge = document.createElement('span');
+      badge.className = 'record';
+      badge.textContent = '新纪录';
+      verdictEl.appendChild(badge);
+    }
+    const tip = tipFor(r);
+    tipEl.textContent = tip;
+    tipEl.hidden = !tip;
+    statCover.textContent = Math.round(r.cover * 100) + '%';
+    statPrec.textContent = Math.round(r.prec * 100) + '%';
+    statTime.textContent = secs.toFixed(1) + ' 秒';
+    resultEl.hidden = false;
+    setHint('');
+
+    if (r.score >= ALIVE_AT) {
+      alive = true;
+      aliveAt = now;
+      guideTarget = 0;
+      if (r.score >= PARTY_AT && !reduceMotion.matches) partyAt = now + 500;
+      if (soundOn && audio) setTimeout(() => quack(r.score >= 95 ? 2 : 1), reduceMotion.matches ? 0 : 450);
+    }
+    schedule();
+  }
+
+  // ---------- 指针 ----------
+  canvas.addEventListener('pointerdown', e => {
+    if (activePointer !== null) return;
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    e.preventDefault();
+    if (state === 'result') resetRound();
+    if (soundOn) ensureAudio();
+    activePointer = e.pointerId;
+    try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
+    state = 'drawing';
+    t0 = performance.now();
+    stroke = [toDesign(e)];
+    offTrack = null;
+    if (mode !== 'trace') guideTarget = 0;
+    strokeVisible = mode !== 'blind';
+    setHint(HINT_DRAWING[mode]);
+    schedule();
+  });
+  canvas.addEventListener('pointermove', e => {
+    if (state !== 'drawing' || e.pointerId !== activePointer) return;
+    const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [];
+    if (evs.length) for (const ev of evs) stroke.push(toDesign(ev));
+    else stroke.push(toDesign(e));
+    schedule();
+  });
+  const endStroke = e => {
+    if (state !== 'drawing' || e.pointerId !== activePointer) return;
+    activePointer = null;
+    stroke.push(toDesign(e));
+    finish(performance.now());
+  };
+  canvas.addEventListener('pointerup', endStroke);
+  canvas.addEventListener('pointercancel', endStroke);
+
+  // ---------- 控件 ----------
+  modeBtns.forEach(btn => btn.addEventListener('click', () => {
+    if (state === 'drawing') return;
+    mode = btn.dataset.mode;
+    modeBtns.forEach(b => {
+      const on = b === btn;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-checked', on ? 'true' : 'false');
+    });
+    showBest();
+    resetRound();
+  }));
+  retryBtn.addEventListener('click', () => {
+    resetRound();
+    canvas.scrollIntoView({ block: 'nearest', behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+  });
+  soundBtn.addEventListener('click', () => {
+    soundOn = !soundOn;
+    soundBtn.textContent = soundOn ? '鸭叫：开' : '鸭叫：关';
+    soundBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false');
+    if (soundOn) { ensureAudio(); quack(1); }
+  });
+  document.addEventListener('keydown', e => {
+    if ((e.key === 'r' || e.key === 'R') && state === 'result') resetRound();
+  });
+
+  // 调试钩子：给自动化测试沿虚线走一遍用
+  window.oneStrokeDuck = { guide: GUIDE.map(p => p.slice()), W, H };
+
+  showBest();
+  resetRound();
+})();
+</script>
+</body>
+</html>
