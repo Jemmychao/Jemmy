@@ -10,4 +10,4 @@
 - 三种玩法：描红（虚线全程可见）、记忆（落笔后虚线消失）、盲画（虚线和笔迹都看不见，松手才揭晓）。
 - 每种玩法的最高分记在浏览器本地。
 
-如需部署到 GitHub Pages，把仓库 Pages 指向本分支根目录后访问 `/one-stroke-duck/`。
+在线玩：<https://jemmychao.github.io/Jemmy/>（GitHub Pages，由 `.github/workflows/pages.yml` 在推送后自动发布）。
