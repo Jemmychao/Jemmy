@@ -1,16 +1,21 @@
 name: 发布到 GitHub Pages
 
+# Pages 的发布来源是 gh-pages 分支（首次推该分支时 GitHub 自动开通）。
+# 这里在每次推送后把站点文件整理好，强推到 gh-pages，GitHub 随后自动构建发布。
+
 on:
   push:
     branches:
       - main
       - claude/mouse-draw-duck-game-ppsvsi
+    paths:
+      - index.html
+      - one-stroke-duck/**
+      - .github/workflows/pages.yml
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
@@ -19,29 +24,28 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    timeout-minutes: 10
     steps:
       - name: 检出代码
-        uses: actions/checkout@v4
-
-      - name: 开通并配置 Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
+        uses: actions/checkout@v5
 
       - name: 整理站点文件
         run: |
-          mkdir -p _site
+          rm -rf _site
+          mkdir _site
           cp index.html _site/
           cp -r one-stroke-duck _site/
+          touch _site/.nojekyll
+          find _site -type f | sort
 
-      - name: 打包站点
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-
-      - name: 部署
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: 推送到 gh-pages 分支
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd _site
+          git init -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "发布站点（来自 ${GITHUB_SHA::7}）"
+          git push --force "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
