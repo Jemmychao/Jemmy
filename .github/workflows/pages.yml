@@ -10,6 +10,7 @@ on:
       - claude/mouse-draw-duck-game-ppsvsi
     paths:
       - index.html
+      - 404.html
       - one-stroke-duck/**
       - .github/workflows/pages.yml
   workflow_dispatch:
@@ -33,7 +34,7 @@ jobs:
         run: |
           rm -rf _site
           mkdir _site
-          cp index.html _site/
+          cp index.html 404.html _site/
           cp -r one-stroke-duck _site/
           touch _site/.nojekyll
           find _site -type f | sort
