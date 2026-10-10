@@ -11,3 +11,7 @@
 - 每种玩法的最高分记在浏览器本地。
 
 在线玩：<https://jemmychao.github.io/Jemmy/>（GitHub Pages，由 `.github/workflows/pages.yml` 在推送后自动发布）。
+
+## 许可证
+
+MIT，见 [`LICENSE`](LICENSE)。随便玩、随便改、随便转发，也可以拿去做自己的版本，只要保留 `LICENSE` 里的版权声明。
