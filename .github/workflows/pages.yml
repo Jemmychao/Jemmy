@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - main
-      - claude/mouse-draw-duck-game-ppsvsi
     paths:
       - index.html
       - 404.html
