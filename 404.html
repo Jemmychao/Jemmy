@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jemmy 的小玩具</title>
+<!--
+  GitHub Pages 找不到文件时返回本页（站内任何一层路径都可能，所以只用绝对路径）。
+  网址打错一个字母或大小写不对（如 /Jemmy/One-Stroke-Duck/），直接带回游戏。
+-->
+<script>
+  (function () {
+    var target = '/Jemmy/one-stroke-duck/';
+    // 目标页自己也找不到时别原地打转，停在本页让人点链接
+    if (location.pathname !== target) location.replace(target);
+  })();
+</script>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #D9E9F2; color: #1F2A33; font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif; }
+  p { margin: 0 16px; text-align: center; }
+  a { color: #CF6650; }
+</style>
+</head>
+<body>
+  <p>这个网址没有找到，正在带你去 <a href="/Jemmy/one-stroke-duck/">一笔画小鸭</a>……</p>
+</body>
+</html>
